@@ -3,9 +3,14 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
 
+
+//interface que guarda la info del pokemon seleccionat
 interface Pokemon {
+  //nom del pokemon
   name: string;
+  //estadistiques
   stats: { name: string, base_stat: number }[];
+  //url de la imatge
   image: string;
 }
 
@@ -27,6 +32,8 @@ export class HomeDaniDiazComponent {
 
   constructor(private http: HttpClient) {}
 
+  //Funcio per afegir la info del pokemon l'interface
+
   buscarPokemon() {
     this.fetchPokemonData(this.IdPokemon)
       .then((dadesPokemon: any) => {
@@ -45,11 +52,15 @@ export class HomeDaniDiazComponent {
       });
   }
 
+
+  //crida a l'endpoint de pokemon per recollir tota la informació del pokemon
   fetchPokemonData(pokemonId: number) {
     return new Promise((resolve, reject) => {
       this.http
         .get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
         .subscribe(
+
+          //recoleccio de les dades. en cas de que l'estadistica d'atac sigui inferior a 50, rejecta la promesa
           (data: any) => {
             const attackStat = data.stats.find((stat: any) => stat.stat.name === 'attack');
             if (attackStat && attackStat.base_stat >= 50) {

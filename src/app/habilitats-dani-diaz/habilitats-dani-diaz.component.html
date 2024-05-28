@@ -1,9 +1,12 @@
 <h1>Busca un pokemon amb la ID: Habilitats</h1>
 
+<!--formulari on escollim el pokemon-->
 <form (ngSubmit)="buscarPokemon()">
   <input type="number" [(ngModel)]="IdPokemon" name="pokemonId" placeholder="Escriu la ID">
   <button type="submit">Buscar</button>
 </form>
+
+<!--informació recollida del pokemon-->
 
 <div *ngIf="pokemon">
  <h2><p>Pokémon: {{ pokemon.name }}</p>

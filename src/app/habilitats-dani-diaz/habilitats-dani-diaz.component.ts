@@ -3,6 +3,8 @@ import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 
+
+//interficie per guardar la info del pokemon
 interface Pokemon {
   name: string;
   abilities: { name: string, description: string }[];
@@ -25,11 +27,15 @@ export class HabilitatsDaniDiazComponent {
   pokemon: Pokemon | null = null;
 
   constructor(private http: HttpClient) {}
+  //Funcio per afegir la info del pokemon l'interface
 
   buscarPokemon() {
+
+    //crida a la funcio de recollir tota la info a partir de la id
     this.fetchPokemonData(this.IdPokemon)
       .then((dadesPokemon: any) => {
         const abilitiesPromises = dadesPokemon.abilities.map((abilityInfo: any) =>
+          //crida a la funcio per recollir les habilitats a partir de l'url obtinguda dins del pokemon
           this.fetchAbilityDescription(abilityInfo.ability.url).then((description: string) => ({
             name: abilityInfo.ability.name,
             description: description
@@ -49,6 +55,7 @@ export class HabilitatsDaniDiazComponent {
       });
   }
 
+  //crida a l'endpoint de pokemon per recollir tota la informació del pokemon, menys la descripcio de l'habilitat
   fetchPokemonData(pokemonId: number) {
     return new Promise((resolve, reject) => {
       this.http
@@ -64,6 +71,8 @@ export class HabilitatsDaniDiazComponent {
     });
   }
 
+
+  //crida a l'endpoint d'habilitts, utilitzant una url pasada per parametre
   fetchAbilityDescription(url: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe(
