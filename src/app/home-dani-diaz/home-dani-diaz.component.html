@@ -1,0 +1,14 @@
+<h1>Busca un pokemon amb la ID: Comprovació de l'atac </h1>
+
+<form (ngSubmit)="buscarPokemon()">
+  <input type="number" [(ngModel)]="IdPokemon" name="pokemonId" placeholder="Escriu la ID">
+  <button type="submit">Buscar</button>
+</form>
+
+<div *ngIf="pokemon">
+  <img *ngIf="pokemon.image" [src]="pokemon.image" alt="Imagen del bicho">
+  <div *ngFor="let stat of pokemon.stats">
+    <p *ngIf="stat.name === 'attack'">Attack: {{ stat.base_stat }}</p>
+  </div>
+
+</div>
